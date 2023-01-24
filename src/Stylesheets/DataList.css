@@ -39,7 +39,7 @@ tr {
   width: 0.6rem;
 }
 
-@media (max-width: 340px) {
+@media (max-width: 380px) {
   .DataList{
     margin-top: 1%;
   }

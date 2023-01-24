@@ -30,7 +30,7 @@
     height: 100px;
 } */
 
-@media (max-width: 340px) {
+@media (max-width: 380px) {
     .Overlayer{
         position: absolute;
         height: 100vh;
