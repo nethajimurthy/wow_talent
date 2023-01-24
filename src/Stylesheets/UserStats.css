@@ -1,0 +1,54 @@
+.UserStats {
+  height: 73%;
+  background-color: #283046;
+  margin-top: 2%;
+  box-shadow: 5px 10px 8px #4c4b4b;
+  border-radius: 7px;
+}
+
+.Top {
+  padding-top: 1.5%;
+  height: 5%;
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.DateField {
+  padding-top: 0.2%;
+  width: 15%;
+  height: 1.5vw;
+  border: 1px solid rgb(48, 68, 142);
+  border-radius: 5px;
+  font-size: 1ww;
+}
+
+.DropDown {
+  height: 1.5vw;
+  background-color: #283046;
+  color: white;
+  border: 1px solid rgb(48, 68, 142);
+  border-radius: 3px;
+  font-size: 1vw;
+}
+
+.PagesIcon {
+  border: 1px solid rgb(195, 108, 108);
+  display: block;
+  float: right;
+  margin: 0px;
+  height: 2vw;
+  width: 20%;
+}
+
+.PagesIcon > ul{
+  text-align: center;
+  border: 1px solid wheat;
+  display: inline-block;
+  flex-direction: row;
+  width: 7%;
+  margin: 3%;
+  padding: 0;
+  border-radius: 20%;
+}
+

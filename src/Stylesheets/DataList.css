@@ -1,0 +1,46 @@
+.DataList {
+  margin: 1%;
+  height: 70%;
+  overflow: scroll;
+}
+
+.DataList::-webkit-scrollbar {
+  width: 50%;
+}
+
+.Table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.TableHead {
+  background-color: rgb(45, 46, 48);
+}
+
+td {
+  text-align: center;
+}
+
+tr {
+  border-bottom: 1pt solid rgb(89, 89, 92);
+}
+
+.EachList {
+  height: 3rem;
+}
+
+.Platforms > ul {
+  margin: 0px;
+  text-align: left;
+}
+
+.Platforms > ul > img {
+  height: 0.6rem;
+  width: 0.6rem;
+}
+
+@media (max-width: 360px) {
+  .DataList{
+    margin-top: 1%;
+  }
+}
