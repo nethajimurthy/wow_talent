@@ -13,7 +13,7 @@ body{
     font-size: 1vw;
 }
 
-@media (max-width: 340px) {
+@media (max-width: 380px) {
     .App{
         display: block;
     }
