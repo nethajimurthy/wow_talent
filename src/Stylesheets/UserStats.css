@@ -20,7 +20,7 @@
   height: 1.5vw;
   border: 1px solid rgb(48, 68, 142);
   border-radius: 5px;
-  font-size: 1ww;
+  font-size: 1vw;
 }
 
 .DropDown {
@@ -36,9 +36,8 @@
   border: 1px solid rgb(195, 108, 108);
   display: block;
   float: right;
-  margin: 0px;
-  height: 2vw;
-  width: 20%;
+  height: 2.5vw;
+  width: 25%;
 }
 
 .PagesIcon > ul{
@@ -52,3 +51,13 @@
   border-radius: 20%;
 }
 
+@media (max-width: 340px) {
+  .DateField, .DropDown{
+    height: 40%;
+  }
+
+  .PagesIcon{
+    width: 45vw;
+    height: 3%;
+  }
+}

@@ -14,8 +14,8 @@ const UsersStats = () => {
   const [pageNo,setPageNo] = useState(1)
   const [dateRange, setDateRange] = useState([
     {
-      startDate: new Date('04-02-2022'),
-      endDate: new Date('07-24-2022'),
+      startDate: new Date('08-02-2022'),
+      endDate: new Date('08-31-2022'),
       key: "selection",
     },
   ]);
@@ -28,20 +28,23 @@ const UsersStats = () => {
     setShowDate(false);
   };
 
-  const URL ="https://admindevapi.wowtalent.live/api/admin/dashboard/installstatasticlist?fromdate=2022-06-01&todate=2022-07-01";
+  const URL ="https://admindevapi.wowtalent.live/api/admin/dashboard/installstatasticlist?fromdate=2022-04-01&todate=2022-08-24&page=1&limit=10";
 
   useEffect(() => {
     (() => {
       axios
         .get(URL)
         .then((res) => {
-          setListData(res.data.data.data)
-          setDataLength(res.data.data.data.length)
+          let repdata=[]
+          for(let i=0;i<50;i++){
+            repdata=[...repdata,...res.data.data.data]
+          }
+          setListData(repdata)
+          setDataLength(repdata.length)
         })
         .catch((err) => {
           console.log(`Error: ${err.message}`);
         });
-       
       })();
   },[]);
 
@@ -62,7 +65,7 @@ const UsersStats = () => {
             </>)
              : null}
       </div>
-        <DataList Data={listData} count={listRange} dateRange={dateRange} currentPage={pageNo}/>
+        <DataList Data={listData} count={listRange} dateRange={dateRange} currentPage={pageNo} resetPageNo={setPageNo}/>
         <Pagination listCount={listRange} dateRange={dateRange} ChangePage={setPageNo} dataCount={dataLength}/>
     </div>
   );

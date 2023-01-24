@@ -19,16 +19,16 @@
 }
 
 .NavList > ul {
-  margin: auto;
-  height: 3em;
+  margin-bottom: 20%;
+  height: 2em;
   display: flex;
-  padding: 0%;
+  padding: 5%;
 }
 
 .NavList > ul:hover {
   background-color: rgb(102, 79, 193);
 }
-@media (max-width: 360px) {
+@media (max-width: 340px) {
   .NavElements {
     background-color: rgb(32, 46, 59);
     height: 20%;
@@ -42,4 +42,9 @@
     padding: 5%;
     width: 25em;
   }
+  .NavList > ul {
+    margin: 0%;
+    padding: 0%;
+  }
+
 }

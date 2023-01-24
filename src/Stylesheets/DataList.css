@@ -39,8 +39,11 @@ tr {
   width: 0.6rem;
 }
 
-@media (max-width: 360px) {
+@media (max-width: 340px) {
   .DataList{
     margin-top: 1%;
+  }
+  .DateField, .Dropdown{
+    height: 30%;
   }
 }

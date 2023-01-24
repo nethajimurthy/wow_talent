@@ -3,7 +3,7 @@ import React from "react";
 const ListRange = ({ SetRange }) => {
     
   const HandleChange = (range) => {
-    SetRange(range);
+    SetRange(Number(range));
   };
 
   return (
