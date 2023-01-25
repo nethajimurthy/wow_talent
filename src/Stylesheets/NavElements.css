@@ -28,6 +28,7 @@
 .NavList > ul:hover {
   background-color: rgb(102, 79, 193);
 }
+
 @media (max-width: 380px) {
   .NavElements {
     background-color: rgb(32, 46, 59);

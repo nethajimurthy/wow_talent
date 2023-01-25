@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import "../Stylesheets/DataList.css";
 
-const DataList = ({ Data, count, dateRange, currentPage, resetPageNo}) => {
+const DataList = ({ Data, count, dateRange, currentPage, resetPageNo, filteredListCount}) => {
   const DateFormatConvert = (date) => {
     const newDate = new Date(date).toDateString().split(" ");
     return `${newDate[2]} ${newDate[1]} ${newDate[3]}`;
@@ -13,17 +13,19 @@ const DataList = ({ Data, count, dateRange, currentPage, resetPageNo}) => {
     console.log('current page in datalist  ',currentPage)
     let tempDate=new Date()
     let current = largeData.filter((ele) => {
+
       tempDate=new Date(ele.created_At)
       return (tempDate >= dateRange[0].startDate && tempDate <= dateRange[0].endDate);
     });
+    filteredListCount(current.length)
+    console.log('filtered data count:',current.length)
+    console.log('Total data count:',largeData.length)
     current=current.slice((currentPage*count)-count,currentPage*count || current.length)
-    console.log(currentPage,count,currentPage*count,current.length)
-    console.log(current)
+    // console.log(currentPage,count,currentPage*count,current.length)
     setCurrentList(current);
   };
 
   useEffect(() => {
-    console.log('triggred DataList')
     ChangeCurrentList(Data);
   }, [count,Data,dateRange,currentPage]);
 

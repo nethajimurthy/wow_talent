@@ -23,7 +23,7 @@ const DateRangeSelection = ({ dateRange, SetDateRange, CloseDate }) => {
         showSelectionPreview={true}
         moveRangeOnFirstSelection={false}
         minDate= {new Date('04-01-2022')}
-        maxDate={new Date('07-02-2022')}
+        maxDate={new Date('08-24-2022')}
         ranges={range}
         direction="vertical"
         scroll={{ enabled: true }}
