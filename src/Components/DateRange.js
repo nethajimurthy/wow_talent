@@ -4,10 +4,12 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "../Stylesheets/DatePopup.css";
 
-const DateRangeSelection = ({ dateRange, SetDateRange, CloseDate }) => {
+const DateRangeSelection = ({ dateRange, SetDateRange, CloseDate,setPageSet, setCurrentPageNo }) => {
   const [range, setRange] = useState(dateRange);
 
   const Apply = () => {
+    setPageSet(1)
+    setCurrentPageNo(1)
     SetDateRange(range);
     CloseDate();
   };

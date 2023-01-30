@@ -1,41 +1,33 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useCallback } from "react";
+import axios from 'axios';
 import "../Stylesheets/DataList.css";
+import ListOfcurrent from "./ListOfcurrent";
 
-const DataList = ({ Data, count, dateRange, currentPage, resetPageNo, filteredListCount}) => {
-  const DateFormatConvert = (date) => {
-    const newDate = new Date(date).toDateString().split(" ");
-    return `${newDate[2]} ${newDate[1]} ${newDate[3]}`;
-  };
+const DataList = ({count, dateRange, currentPage, setTotalPages, setPageSet}) => {
+
+  const QparaDateconverter=(date)=>{
+    let year=date.getFullYear().toString()
+    let month=date.getMonth()+1<10? ('0'+((date.getMonth()+1).toString())):((date.getMonth()+1).toString())
+    let day=date.getDate()<10? ('0'+(date.getDate().toString())):(date.getDate().toString())
+    let temp=`${year}-${month}-${day}`
+    // console.log(temp)
+    return temp
+  }
 
   const [currentList, setCurrentList] = useState([]);
-
-  const ChangeCurrentList = (largeData) => {
-    console.log('current page in datalist  ',currentPage)
-    let tempDate=new Date()
-    let current = largeData.filter((ele) => {
-
-      tempDate=new Date(ele.created_At)
-      return (tempDate >= dateRange[0].startDate && tempDate <= dateRange[0].endDate);
-    });
-    filteredListCount(current.length)
-    console.log('filtered data count:',current.length)
-    console.log('Total data count:',largeData.length)
-    current=current.slice((currentPage*count)-count,currentPage*count || current.length)
-    // console.log(currentPage,count,currentPage*count,current.length)
-    setCurrentList(current);
-  };
-
   useEffect(() => {
-    ChangeCurrentList(Data);
-  }, [count,Data,dateRange,currentPage]);
-
-  useEffect(()=>{
-    resetPageNo(1)
-  },[count])
-
+    (async()=>{
+      let url=`https://admindevapi.wowtalent.live/api/admin/dashboard/installstatasticlist?fromdate=${QparaDateconverter(dateRange[0].startDate)}&todate=${QparaDateconverter(dateRange[0].endDate)}&page=${currentPage}&limit=${count}`
+      // console.log(url)
+      let filteredData=await axios.get(url)
+      setCurrentList(filteredData.data.data.data)
+      setTotalPages(filteredData.data.data.pages)
+    })()
+  }, [dateRange,currentPage,count]);
+  
   return (
     <div className="DataList">
-      {Data.length > 0 ? (
+      {currentList.length > 0 ? (
         <table className="Table">
           <tr className="TableHead">
             <th>Date</th>
@@ -46,55 +38,7 @@ const DataList = ({ Data, count, dateRange, currentPage, resetPageNo, filteredLi
             <th>Churn Rate</th>
             <th>Churn Platform</th>
           </tr>
-          {currentList.map((data, index) => {
-            return (
-              <tr className="EachList" key={index}>
-                <td>{DateFormatConvert(data.created_At)}</td>
-                <td>{data.totalinstall}</td>
-                <td className="Platforms">
-                  <ul>
-                    <img src={require("../images/ios_logo.png")} alt="ios" />
-                    &nbsp; {data.ios_install}
-                  </ul>
-                  <ul>
-                    <img
-                      src={require("../images/android_logo.png")}
-                      alt="ios"
-                    />
-                    &nbsp; {data.android_install}
-                  </ul>
-                </td>
-                <td>{data.totaluninstall}</td>
-                <td className="Platforms">
-                  <ul>
-                    <img src={require("../images/ios_logo.png")} alt="ios" />
-                    &nbsp; {data.ios_uninstall}
-                  </ul>
-                  <ul>
-                    <img
-                      src={require("../images/android_logo.png")}
-                      alt="ios"
-                    />
-                    &nbsp; {data.android_uninstall}
-                  </ul>
-                </td>
-                <td>{data.totalchurn}%</td>
-                <td className="Platforms">
-                  <ul>
-                    <img src={require("../images/ios_logo.png")} alt="ios" />
-                    &nbsp; {data.ios_churn}%
-                  </ul>
-                  <ul>
-                    <img
-                      src={require("../images/android_logo.png")}
-                      alt="ios"
-                    />
-                    &nbsp; {data.android_churn}%
-                  </ul>
-                </td>
-              </tr>
-            );
-          })}
+          <ListOfcurrent data={currentList}/>
         </table>
       ) : (
         <h2>Loading....</h2>

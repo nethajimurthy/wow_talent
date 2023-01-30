@@ -4,21 +4,33 @@ import ListRange from "./ListRange";
 import DateRangeSelection from "./DateRange";
 import DataList from "./DataList";
 import Pagination from "./Pagination";
-import axios from "axios";
 
 const UsersStats = () => {
   const [showDate, setShowDate] = useState(false);
-  const [dataLength,setDataLength]=useState(0)
   const [listRange, setListRange] = useState(5);
-  const [listData, setListData] = useState([]);
-  const [pageNo,setPageNo] = useState(1)
+  const [currentPage, setCurrentPageNo] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [pageSet, setPageSet] = useState(1);
+
   const [dateRange, setDateRange] = useState([
     {
-      startDate: new Date('04-01-2022'),
-      endDate: new Date('08-25-2022'),
+      startDate: new Date("04-01-2022"),
+      endDate: new Date("08-25-2022"),
       key: "selection",
     },
   ]);
+
+  const ChangeListRange = (range) => {
+    setListRange(range);
+    setCurrentPageNo(1);
+    setPageSet(1);
+  };
+
+  const DateFormat = (date) => {
+    let temp =
+      date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+    return temp;
+  };
 
   const ShowDate = () => {
     setShowDate(true);
@@ -28,44 +40,40 @@ const UsersStats = () => {
     setShowDate(false);
   };
 
-  const URL ="https://admindevapi.wowtalent.live/api/admin/dashboard/installstatasticlist?fromdate=2022-04-01&todate=2022-08-24&page=1&limit=120";
-
-  useEffect(() => {
-    (() => {
-      axios
-        .get(URL)
-        .then((res) => {
-          let repdata=res.data.data.data
-          // for(let i=0;i<50;i++){
-          //   repdata=[...repdata,...res.data.data.data]
-          // }
-          setListData(repdata)
-        })
-        .catch((err) => {
-          console.log(`Error: ${err.message}`);
-        });
-      })();
-  },[]);
-
   return (
     <div className="UserStats">
       <div className="Top">
-        <ListRange SetRange={setListRange} />
+        <ListRange SetRange={ChangeListRange} />
         <div onClick={() => ShowDate()} className="DateField">
-          Select Duration
+          {DateFormat(dateRange[0].startDate)} -{" "}
+          {DateFormat(dateRange[0].endDate)}
         </div>
-        {showDate? (<>
-          <DateRangeSelection
-            dateRange={dateRange}
-            SetDateRange={setDateRange}
-            id="Date"
-            CloseDate={CloseDate}
+        {showDate ? (
+          <>
+            <DateRangeSelection
+              setCurrentPageNo={setCurrentPageNo}
+              setPageSet={setPageSet}
+              dateRange={dateRange}
+              SetDateRange={setDateRange}
+              id="Date"
+              CloseDate={CloseDate}
             />
-            </>)
-             : null}
+          </>
+        ) : null}
       </div>
-        <DataList Data={listData} count={listRange} dateRange={dateRange} filteredListCount={setDataLength} currentPage={pageNo} resetPageNo={setPageNo}/>
-        <Pagination listCount={listRange} dateRange={dateRange} ChangePage={setPageNo} dataCount={dataLength}/>
+      <DataList
+        count={listRange}
+        dateRange={dateRange}
+        currentPage={currentPage}
+        setTotalPages={setTotalPages}
+        setPageSet={setPageSet}
+      />
+      <Pagination
+        totalCount={totalPages}
+        setCurrentPage={setCurrentPageNo}
+        pageSet={pageSet}
+        setPageSet={setPageSet}
+      />
     </div>
   );
 };
